@@ -1,8 +1,7 @@
 name: Alerta Bombeiros
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'
+  # O agendamento será reativado quando o executor tiver acesso de rede ao SYSBM.
   workflow_dispatch:
 
 permissions:
