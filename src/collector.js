@@ -43,10 +43,17 @@ export async function collectOccurrences(config, dependencies = {}) {
   const launcher = dependencies.chromium || chromium;
   const browser = await launcher.launch({ headless: config.headless });
   const context = await browser.newContext({ locale: 'pt-BR', timezoneId: 'America/Sao_Paulo' });
+  await context.route('**/*', route => {
+    const resourceType = route.request().resourceType();
+    if (['image', 'font', 'media'].includes(resourceType)) return route.abort();
+    return route.continue();
+  });
   const page = await context.newPage();
   page.setDefaultTimeout(config.timeoutMs);
   try {
-    await page.goto(config.sysbmUrl, { waitUntil: 'domcontentloaded', timeout: config.timeoutMs });
+    // O Scriptcase mantém recursos pendentes por bastante tempo. Basta aguardar a
+    // resposta inicial e, em seguida, o seletor real do formulário.
+    await page.goto(config.sysbmUrl, { waitUntil: 'commit', timeout: config.timeoutMs });
     await page.locator(SELECTORS.period).waitFor({ state: 'visible' });
     await page.locator(SELECTORS.period).selectOption(config.lookback);
     const municipality = page.locator(SELECTORS.municipio);
@@ -68,3 +75,4 @@ export async function collectOccurrences(config, dependencies = {}) {
 }
 
 export { SELECTORS, extractFromPage };
+
