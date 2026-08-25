@@ -1,0 +1,7 @@
+{
+  "ocorrencias": [
+    {"data":"24/08/2026","horario":"14:30","municipio":"Cascavél ","tipo":"Incêndio","bairro":"Centro","endereco":"Rua Exemplo, 100","descricao":"Teste controlado","situacao":"Em atendimento"},
+    {"data":"24/08/2026","horario":"13:10","municipio":"Toledo","tipo":"APH","descricao":"Não deve aparecer"},
+    {"data":"23/08/2026","horario":"09:00","municipio":"CASCAVEL","tipo":"Busca e Salvamento","bairro":"Pioneiros Catarinenses"}
+  ]
+}
